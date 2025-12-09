@@ -31,17 +31,6 @@ public function registerWithBankAccount(StoreBankAccountRequest $request)
 }
 
 
-    // public function store(StoreBankAccountRequest $request)
-    // {
-    //     $account = $this->service->create($request->validated());
-
-    //     return ApiResponse::sendResponse(
-    //         201,
-    //         'Account created successfully',
-    //         $account
-    //     );
-    // }
-
     public function update(UpdateBankAccountRequest $request, $id)
     {
         $account = BankAccount::find($id);
