@@ -28,21 +28,15 @@ class DepositTransactionService
             'created_by_user_id' => $data['user_id'] ?? null,
         ]);
 
-        $chargeResult = $this->paymentGateway->charge([
+        $checkout = $this->paymentGateway->createCheckout([
+            'transaction_id' => $transaction->id,
             'amount' => $transaction->transaction_amount,
             'currency' => $transaction->transaction_currency,
-            'payment_method_types' => ['card'],
-            'payment_method' => $data['payment_method'],
             'description' => 'Deposit #' . $transaction->transaction_reference,
-            'metadata' => ['transaction_id' => $transaction->id],
-            'idempotency_key' => $transaction->transaction_reference,
         ]);
 
-        $transaction->transaction_status = $chargeResult['status'] === 'succeeded'
-            ? TransactionStatus::COMPLETED
-            : TransactionStatus::FAILED;
-
-        $transaction->metadata = $chargeResult['raw'];
+        $transaction->transaction_status = TransactionStatus::PENDING;
+        $transaction->metadata = ['checkout_url' => $checkout['checkout_url']];
         $this->repository->save($transaction);
 
         return $transaction;
