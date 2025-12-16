@@ -1,9 +1,11 @@
 <?php
 
 use App\Modules\Accounts\Controllers\AccountStateController;
+use App\Modules\Accounts\Controllers\AuthController;
 use App\Modules\Accounts\Controllers\BankAccountController;
 use App\Modules\Transactions\Controllers\DepositTransactionController;
 use App\Modules\Transactions\Controllers\TransactionController;
+use App\Modules\Transactions\Controllers\TransferTransactionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Modules\Transactions\Controllers\WithdrawalTransactionController;
@@ -16,6 +18,7 @@ Route::get('/user', function (Request $request) {
 Route::prefix('accounts')->group(function () {
     // facade pattrens
     Route::post('/register', [BankAccountController::class, 'registerWithBankAccount']);
+    Route::post('login', [AuthController::class, 'login']);
 
     Route::put('/{id}', [BankAccountController::class, 'update']);
     Route::patch('/{id}/close', [BankAccountController::class, 'close']);
@@ -30,19 +33,15 @@ Route::prefix('accounts')->group(function () {
 
 // ////////////////Transaction Module///////////////////
 
-Route::prefix('transactions')->group(function () {
-    Route::post('{id}/approve', [TransactionController::class, 'approveTransaction']);
+Route::middleware('auth:api')->prefix('transactions')->group(function () {
 
+    Route::post('/deposit', [DepositTransactionController::class, 'deposit']);
+    Route::post('/withdraw', [WithdrawalTransactionController::class, 'withdraw']);
+    Route::post('/transfer', [TransferTransactionController::class, 'transfer']);
 });
 
-Route::middleware('auth:api')->group(function () {
-    Route::post('transactions/deposit', [DepositTransactionController::class, 'deposit']);
-});
 
 Route::get('/deposit/success', [DepositTransactionController::class, 'success'])->name('deposit.success');
 Route::get('/deposit/cancel', [DepositTransactionController::class, 'cancel'])->name('deposit.cancel');
 
-Route::prefix('transactions')->middleware('auth:api')->group(function () {
-    Route::post('/withdraw', [WithdrawalTransactionController::class, 'withdraw']);
-});
 
