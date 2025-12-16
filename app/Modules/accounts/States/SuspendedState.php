@@ -8,12 +8,12 @@ class SuspendedState implements AccountState
 {
     public function deposit(BankAccount $account, float $amount): BankAccount
     {
-        throw new \Exception("Cannot deposit to a suspended account");
+        throw new \Exception('Cannot deposit to a suspended account');
     }
 
     public function withdraw(BankAccount $account, float $amount): BankAccount
     {
-        throw new \Exception("Cannot withdraw from a suspended account");
+        throw new \Exception('Cannot withdraw from a suspended account');
     }
 
     public function close(BankAccount $account): BankAccount
@@ -21,7 +21,8 @@ class SuspendedState implements AccountState
         $account->status = 'closed';
         $account->closed_at = now();
         $account->save();
-        $account->setState(new ClosedState());
+        $account->setState(new ClosedState);
+
         return $account;
     }
 
@@ -29,12 +30,13 @@ class SuspendedState implements AccountState
     {
         $account->status = 'frozen';
         $account->save();
-        $account->setState(new FrozenState());
+        $account->setState(new FrozenState);
+
         return $account;
     }
 
     public function suspend(BankAccount $account): BankAccount
     {
-        throw new \Exception("Account is already suspended");
+        throw new \Exception('Account is already suspended');
     }
 }

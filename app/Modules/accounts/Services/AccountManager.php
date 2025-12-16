@@ -8,7 +8,9 @@ use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 class AccountManager
 {
     protected UserService $userService;
+
     protected ClientService $clientService;
+
     protected BankAccountService $bankAccountService;
 
     public function __construct(
@@ -24,7 +26,6 @@ class AccountManager
     /**
      * Register user + client + bank account atomically.
      *
-     * @param array $data
      * @return array ['token', 'user', 'client', 'account']
      *
      * @throws \Exception
@@ -45,9 +46,9 @@ class AccountManager
             $token = JWTAuth::fromUser($user);
 
             return [
-                'token'   => $token,
-                'user'    => $user,
-                'client'  => $client,
+                'token' => $token,
+                'user' => $user,
+                'client' => $client,
                 'account' => $account,
             ];
         });

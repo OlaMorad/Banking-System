@@ -2,10 +2,10 @@
 
 namespace App\Modules\Transactions\Controllers;
 
+use App\Helpers\ApiResponse;
 use App\Http\Controllers\Controller;
 use App\Modules\Transactions\Models\Transaction;
 use App\Modules\Transactions\Services\TransactionApprovalService;
-use App\Helpers\ApiResponse;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
@@ -20,7 +20,7 @@ class TransactionController extends Controller
     public function approveTransaction(Request $request, int $id)
     {
         $transaction = Transaction::find($id);
-        if (!$transaction) {
+        if (! $transaction) {
             return ApiResponse::sendError('Transaction not found', 404);
         }
 

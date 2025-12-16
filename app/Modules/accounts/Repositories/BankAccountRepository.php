@@ -12,6 +12,7 @@ class BankAccountRepository implements BankAccountRepositoryInterface
         if ($account) {
             $account->setStateByStatus();
         }
+
         return $account;
     }
 
@@ -19,6 +20,7 @@ class BankAccountRepository implements BankAccountRepositoryInterface
     {
         $account->update($data);
         $account->setStateByStatus();
+
         return $account;
     }
 }

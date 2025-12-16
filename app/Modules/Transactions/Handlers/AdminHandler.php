@@ -11,6 +11,7 @@ class AdminHandler implements TransactionHandler
     public function setNext(TransactionHandler $handler): TransactionHandler
     {
         $this->next = $handler;
+
         return $handler;
     }
 

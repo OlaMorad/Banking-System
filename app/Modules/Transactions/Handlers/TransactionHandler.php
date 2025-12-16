@@ -6,8 +6,9 @@ use App\Modules\Transactions\Models\Transaction;
 
 interface TransactionHandler
 {
-    //لتعيين الـ Handler التالي في السلسلة
+    // لتعيين الـ Handler التالي في السلسلة
     public function setNext(TransactionHandler $handler): TransactionHandler;
-    //لمعالجة المعاملة أو تمريرها للـ Handler التالي
+
+    // لمعالجة المعاملة أو تمريرها للـ Handler التالي
     public function handle(Transaction $transaction): Transaction;
 }

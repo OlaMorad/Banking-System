@@ -10,16 +10,18 @@ class ActiveState implements AccountState
     {
         $account->balance += $amount;
         $account->save();
+
         return $account;
     }
 
     public function withdraw(BankAccount $account, float $amount): BankAccount
     {
         if ($account->balance < $amount) {
-            throw new \Exception("Insufficient balance");
+            throw new \Exception('Insufficient balance');
         }
         $account->balance -= $amount;
         $account->save();
+
         return $account;
     }
 
@@ -28,7 +30,8 @@ class ActiveState implements AccountState
         $account->status = 'closed';
         $account->closed_at = now();
         $account->save();
-        $account->setState(new ClosedState());
+        $account->setState(new ClosedState);
+
         return $account;
     }
 
@@ -36,7 +39,8 @@ class ActiveState implements AccountState
     {
         $account->status = 'frozen';
         $account->save();
-        $account->setState(new FrozenState());
+        $account->setState(new FrozenState);
+
         return $account;
     }
 
@@ -44,7 +48,8 @@ class ActiveState implements AccountState
     {
         $account->status = 'suspended';
         $account->save();
-        $account->setState(new SuspendedState());
+        $account->setState(new SuspendedState);
+
         return $account;
     }
 }

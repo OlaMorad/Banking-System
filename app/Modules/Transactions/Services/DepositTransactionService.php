@@ -20,7 +20,7 @@ class DepositTransactionService
             'transaction_reference' => Str::uuid(),
             'source_account_id' => $data['source_account_id'],
             'transaction_type' => TransactionType::DEPOSIT,
-          //  'transaction_status' => TransactionStatus::PENDING,
+            //  'transaction_status' => TransactionStatus::PENDING,
             'transaction_amount' => $data['transaction_amount'],
             'transaction_currency' => $data['transaction_currency'] ?? 'USD',
             'notes' => $data['notes'] ?? null,
@@ -32,7 +32,7 @@ class DepositTransactionService
             'transaction_id' => $transaction->id,
             'amount' => $transaction->transaction_amount,
             'currency' => $transaction->transaction_currency,
-            'description' => 'Deposit #' . $transaction->transaction_reference,
+            'description' => 'Deposit #'.$transaction->transaction_reference,
         ]);
 
         $transaction->transaction_status = TransactionStatus::PENDING;
