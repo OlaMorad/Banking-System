@@ -11,6 +11,7 @@ class TellerHandler implements TransactionHandler
     public function setNext(TransactionHandler $handler): TransactionHandler
     {
         $this->next = $handler;
+
         return $handler;
     }
 
@@ -24,6 +25,6 @@ class TellerHandler implements TransactionHandler
             return $this->next->handle($transaction);
         }
 
-        throw new \Exception("Transaction requires higher approval");
+        throw new \Exception('Transaction requires higher approval');
     }
 }

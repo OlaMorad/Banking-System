@@ -19,6 +19,7 @@ class TransactionRepository implements TransactionRepositoryInterface
     public function save(Transaction $transaction): Transaction
     {
         $transaction->save();
+
         return $transaction;
     }
 }

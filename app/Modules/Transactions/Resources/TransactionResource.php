@@ -12,7 +12,7 @@ class TransactionResource extends JsonResource
             'id' => $this->id,
             'transaction_reference' => $this->transaction_reference,
             'transaction_type' => $this->transaction_type->value,
-            'status' =>$this->transaction_status->value,
+            'status' => $this->transaction_status->value,
             'amount' => (float) $this->transaction_amount,
             'currency' => $this->transaction_currency,
             'notes' => $this->notes,

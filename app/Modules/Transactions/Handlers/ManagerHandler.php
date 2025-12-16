@@ -11,6 +11,7 @@ class ManagerHandler implements TransactionHandler
     public function setNext(TransactionHandler $handler): TransactionHandler
     {
         $this->next = $handler;
+
         return $handler;
     }
 
@@ -24,6 +25,6 @@ class ManagerHandler implements TransactionHandler
             return $this->next->handle($transaction);
         }
 
-        throw new \Exception("Transaction requires Admin approval");
+        throw new \Exception('Transaction requires Admin approval');
     }
 }

@@ -24,8 +24,11 @@ return new class extends Migration
             // $table->decimal('overdraft_limit', 15, 2)->nullable();
             $table->dateTime('opened_at')->useCurrent();
             $table->dateTime('closed_at')->nullable();
+            // يربط الحساب الحالي بالحساب الأب واذا null فهو حساب رئيسي
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->timestamps();
         });
+
     }
 
     /**
