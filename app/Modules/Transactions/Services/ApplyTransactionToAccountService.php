@@ -59,5 +59,17 @@ class ApplyTransactionToAccountService
 
     protected function transfer(Transaction $transaction): void
     {
+        $source = BankAccount::findOrFail($transaction->source_account_id);
+        $destination = BankAccount::findOrFail($transaction->destination_account_id);
+
+        if ($source->balance < $transaction->transaction_amount) {
+            throw new DomainException('Insufficient balance for transfer.');
+        }
+
+        $source->balance -= $transaction->transaction_amount;
+        $destination->balance += $transaction->transaction_amount;
+
+        $this->bankRepo->update($source, ['balance' => $source->balance]);
+        $this->bankRepo->update($destination, ['balance' => $destination->balance]);
     }
 }
