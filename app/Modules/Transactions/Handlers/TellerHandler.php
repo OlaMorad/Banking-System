@@ -17,8 +17,13 @@ class TellerHandler implements TransactionHandler
 
     public function handle(Transaction $transaction): Transaction
     {
-        if ($transaction->amount <= 5000) {
-            return $transaction->approveBy('Teller');
+        $teller = auth()->user();
+
+        if ($transaction->transaction_amount <= 5000) {
+            if (! $teller->hasRole('Teller')) {
+                throw new \Exception('Only Teller can approve this transaction');
+            }
+            return $transaction->approveBy($teller->id);
         }
 
         if ($this->next) {
