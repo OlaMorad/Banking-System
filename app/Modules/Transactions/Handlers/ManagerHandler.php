@@ -17,8 +17,13 @@ class ManagerHandler implements TransactionHandler
 
     public function handle(Transaction $transaction): Transaction
     {
-        if ($transaction->amount <= 10000) {
-            return $transaction->approveBy('Manager');
+        $manager = auth()->user();
+
+        if ($transaction->transaction_amount <= 10000) {
+            if (! $manager->hasRole('Manager')) {
+                throw new \Exception('Only Manager can approve this transaction');
+            }
+            return $transaction->approveBy($manager->id);
         }
 
         if ($this->next) {

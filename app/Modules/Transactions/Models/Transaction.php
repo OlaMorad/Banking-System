@@ -62,8 +62,8 @@ class Transaction extends Model
      */
     public function approveBy(string $role): self
     {
-        $this->status = 'approved';
-        $this->approved_by = $role;
+        $this->transaction_status = 'approved';
+        $this->approved_by_user_id = $role;
         $this->save();
 
         return $this;
@@ -74,7 +74,7 @@ class Transaction extends Model
      */
     public function reject(string $reason): self
     {
-        $this->status = 'rejected';
+        $this->transaction_status = 'rejected';
         $this->approved_by = $reason;
         $this->save();
 
