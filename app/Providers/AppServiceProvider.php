@@ -6,6 +6,8 @@ use App\Modules\Accounts\Models\BankAccount;
 use App\Modules\Accounts\Observers\BankAccountObserver;
 use App\Modules\Transactions\Integrations\PaymentGateway;
 use App\Modules\Transactions\Integrations\StripeAdapter;
+use App\Modules\Transactions\Models\Transaction;
+use App\Modules\Transactions\Observers\TransactionObserver;
 use App\Modules\Transactions\Repositories\TransactionRepository;
 use App\Modules\Transactions\Repositories\TransactionRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
@@ -52,5 +54,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         BankAccount::observe(BankAccountObserver::class);
+        Transaction::observe(TransactionObserver::class);
     }
 }
