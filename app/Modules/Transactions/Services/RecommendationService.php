@@ -19,7 +19,7 @@ class RecommendationService
         $recommendations = [];
 
         foreach ($this->strategies as $strategy) {
-            if ($strategy->supports($transactions)) {
+            if ($strategy->applies($transactions)) {
                 $recommendations[] = $strategy->recommend($transactions);
             }
         }
