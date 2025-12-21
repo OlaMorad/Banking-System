@@ -67,7 +67,7 @@ class NotificationService
 
     public function sendToRole(string $roleName, string $title, string $body, array $data = []): bool
     {
-        $users = User::role($roleName, 'web')->get();
+        $users = User::role('Admin')->get();
         if ($users->isEmpty()) {
             Log::warning("No users found with role={$roleName}");
             return false;

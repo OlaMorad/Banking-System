@@ -64,7 +64,9 @@ class TransactionObserver
 
     protected function notifyStatusChange(Transaction $transaction): void
     {
-        $userId = $transaction->account->client->user_id;
+        $transaction->loadMissing('sourceAccount.client');
+
+        $userId = $transaction->sourceAccount?->client?->user_id;
 
         /** @var NotificationService $notifier */
         $notifier = app(NotificationService::class);
