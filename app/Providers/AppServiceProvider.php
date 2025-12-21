@@ -10,6 +10,10 @@ use App\Modules\Transactions\Models\Transaction;
 use App\Modules\Transactions\Observers\TransactionObserver;
 use App\Modules\Transactions\Repositories\TransactionRepository;
 use App\Modules\Transactions\Repositories\TransactionRepositoryInterface;
+use App\Modules\Transactions\Services\RecommendationService;
+use App\Modules\Transactions\Strategies\HighSpendingStrategy;
+use App\Modules\Transactions\Strategies\RecurringTransactionsStrategy;
+use App\Modules\Transactions\Strategies\StableActivityStrategy;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -45,6 +49,14 @@ class AppServiceProvider extends ServiceProvider
                 $app->make(\App\Modules\Accounts\Services\ClientService::class),
                 $app->make(\App\Modules\Accounts\Services\BankAccountService::class),
             );
+        });
+
+        $this->app->singleton(RecommendationService::class, function () {
+            return new RecommendationService([
+                new HighSpendingStrategy(),
+                new RecurringTransactionsStrategy(),
+                new StableActivityStrategy(),
+            ]);
         });
     }
 

@@ -10,8 +10,11 @@ use App\Modules\administratives\Controllers\ReportController;
 use App\Modules\Transactions\Controllers\TransactionController;
 use App\Modules\administratives\Controllers\DashboardController;
 use App\Modules\Support\Controllers\TicketController;
+use App\Modules\Transactions\Controllers\AuditLogController;
 use App\Modules\Transactions\Controllers\DepositTransactionController;
+use App\Modules\Transactions\Controllers\RecommendationController;
 use App\Modules\Transactions\Controllers\RecurringTransactionController;
+use App\Modules\Transactions\Controllers\TransactionSettingController;
 use App\Modules\Transactions\Controllers\TransferTransactionController;
 use App\Modules\Transactions\Controllers\WithdrawalTransactionController;
 
@@ -85,3 +88,11 @@ Route::prefix('tickets')->middleware('auth:api')->group(function () {
     Route::post('/reply/{ticket}', [TicketController::class, 'reply']);
     Route::patch('/close/{ticket}', [TicketController::class, 'close']);
 });
+
+
+Route::middleware('auth:api')->group(function () {
+    Route::get('/transactions/recommendations',[RecommendationController::class, 'index']);
+    Route::put('/transaction-settings', [TransactionSettingController::class, 'update']);
+    Route::get('/audit-logs', [AuditLogController::class, 'index']);//->middleware('role:Admin');
+});
+
